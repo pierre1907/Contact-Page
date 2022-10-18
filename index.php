@@ -91,28 +91,29 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 ml-auto" >
-            <form action="#" method="post">
+
+            <form action="mail.php" method="post">
               <div class="form-group row">
                 <div class="col-md-12">
-                  <input type="text" class="form-control" placeholder="Objet de la demande">
+                  <input required type="text" name="objet" class="form-control" placeholder="Objet de la demande*">
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-md-6 mb-4 mb-lg-0">
-                  <input type="text" class="form-control" placeholder="Prénom(s)">
+                  <input required type="text" name="prenom" class="form-control" placeholder="Prénom(s) *">
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Nom">
+                  <input required type="text" name="nom" class="form-control" placeholder="Nom *">
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-5">
-                  <input type="text" class="form-control" placeholder="Email ">
+                  <input required type="text" name="email" class="form-control" placeholder="Email *">
                 </div>
 
-                <select class="col-md-3" name="pays">
-                  <option value="intitule">Pays de Résidence</option>
+                <select name="pays" required class="col-md-3" name="pays">
+                  <option disabled selected value="intitule">Pays de Résidence</option>
                   <optgroup label="A">
                     <option value="afghanistan">Afghanistan</option>
                     <option value="afrique-du-sud">Afrique du Sud</option>
@@ -404,17 +405,47 @@
                     <option value="zimbabwe">Zimbabwe</option>
                   </optgroup>
                 </select>
+
                 <div class="col-md-4">
-                  <input type="number" class="form-control" placeholder="Téléphone ">
+                  <input required type="number" name="phone" class="form-control" placeholder="Téléphone *">
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <textarea name="" id="" class="form-control" placeholder="Ecrivez votre message ici." cols="30" rows="10"></textarea>
+                  <textarea required name="message" id="" class="form-control" placeholder="Ecrivez votre message ici.*" cols="30" rows="10"></textarea>
                 </div>
               </div>
 
+            
+              <?php
+                if (isset($_POST['message'])) {
+                  $entete  = 'MIME-Version: 1.0' . "\r\n";
+                  $entete .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+                  $entete .= 'From: ameesis.dakar@gmail.com' . "\r\n";
+                  $entete .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n"; 
+                  $entete .= 'Reply-to: ' . $_POST['email'];
+
+                  $message = '<h1>Message envoyé depuis la page Contact de l\'ameesis</h1>
+                  <p><b>Nom : </b>' . $_POST['nom'] . '<br>
+
+                  <p><b>Prenom(s) : </b>' . $_POST['prenom'] . '<br>
+                  
+                  <p><b>Email : </b>' . $_POST['email'] . '<br>
+                  
+                  <p><b>Pays : </b>' . $_POST['pays'] . '<br>
+                  
+                  <p><b>Téléphone : </b>' . $_POST['phone'] . '<br>
+                  
+                  <b>Message : </b>' . htmlspecialchars($_POST['message']) . '</p>';
+
+                  $retour = mail('eliakimksi.pro@gmail.com', 'Envoi depuis page Contact', $message, $entete);
+                  if($retour)
+                      echo '<p>Votre message a bien été envoyé.</p>';
+                }
+              ?>
+
+    
               <!-- Style for checkBox label -->
               <style>
                 /* Customize the label (the container) */
@@ -424,7 +455,7 @@
                   padding-left: 35px;
                   margin-bottom: 12px;
                   cursor: pointer;
-                  font-size: 22px;
+                  font-size: 13px;
                   -webkit-user-select: none;
                   -moz-user-select: none;
                   -ms-user-select: none;
@@ -487,14 +518,11 @@
               </style>
               <!--End of Style for checkBox label -->
 
-              <div class="form-group row">
-                <div class="col-md-6 row" style="align-items: center; justify-content:space-between ">
-                  <label class="textofcheck">J'accepte
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                  </label>
-
-                  <label class="textofcheck">kfjksqnkjn
+              <div class="form-group row ml-auto col-12">
+                <div class="col-md-12 row">
+                  <label class="textofcheck">
+                    Dans le cadre de la réglementation sur la protection des données,
+                    j'accepte d'être contacté par email et téléphone. *
                     <input type="checkbox">
                     <span class="checkmark"></span>
                   </label>
