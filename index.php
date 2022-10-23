@@ -53,10 +53,8 @@
             <div class="col-9  text-right">
               
 
-              <span class="d-inline-block d-lg-block"><a href="#" class="text-white site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-white"></span></a></span>
-
-              
-
+              <span class="d-inline-block d-lg-block"><a href="#" class="text-white site-menu-toggle 
+              js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-white"></span></a></span>
               <nav class="site-navigation text-right ml-auto d-none d-lg-none" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
                   <li class="active"><a href="contact.html" class="nav-link">Contact</a></li>
@@ -92,7 +90,7 @@
         <div class="row">
           <div class="col-lg-8 ml-auto" >
 
-            <form action="mail.php" method="post">
+            <form method="POST">
               <div class="form-group row">
                 <div class="col-md-12">
                   <input required type="text" name="objet" class="form-control" placeholder="Objet de la demande*">
@@ -413,7 +411,7 @@
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <textarea required name="message" id="" class="form-control" placeholder="Ecrivez votre message ici.*" cols="30" rows="10"></textarea>
+                  <textarea required name="demande" id="" class="form-control" placeholder="Ecrivez votre message ici.*" cols="30" rows="10"></textarea>
                 </div>
               </div>
 
@@ -422,11 +420,11 @@
                 if (isset($_POST['message'])) {
                   $entete  = 'MIME-Version: 1.0' . "\r\n";
                   $entete .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-                  $entete .= 'From: ameesis.dakar@gmail.com' . "\r\n";
-                  $entete .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n"; 
                   $entete .= 'Reply-to: ' . $_POST['email'];
 
-                  $message = '<h1>Message envoyé depuis la page Contact de l\'ameesis</h1>
+                  $message = htmlspecialchars('<h1>Merci de bien vouloir recevoir les données du formulaire envoyé depuis 
+                  la page contact du site officiel de l\'ameesis. Merci de bien vouloir les traiter en moins de 48h</h1>
+
                   <p><b>Nom : </b>' . $_POST['nom'] . '<br>
 
                   <p><b>Prenom(s) : </b>' . $_POST['prenom'] . '<br>
@@ -437,9 +435,9 @@
                   
                   <p><b>Téléphone : </b>' . $_POST['phone'] . '<br>
                   
-                  <b>Message : </b>' . htmlspecialchars($_POST['message']) . '</p>';
+                  <b>Message : </b>' . htmlspecialchars($_POST['demande']) . '</p>');
 
-                  $retour = mail('eliakimksi.pro@gmail.com', 'Envoi depuis page Contact', $message, $entete);
+                  $retour = mail('ameesis.dakar@gmail.com', 'Envoi depuis la page Contact', $message, $entete);
                   if($retour)
                       echo '<p>Votre message a bien été envoyé.</p>';
                 }
@@ -589,7 +587,7 @@
                 <img src="images/Mousca Sidime.jpg" style="height: 250px; width: 200px">
               </span>
               <h3>Moussa SIDIME</h3>
-              <p>Master 2 droit des affaires rélation internationale</p>
+              <p>Master 2 droit des affaires relation internationale</p>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -671,7 +669,7 @@
       </div>
     </footer>
 
-    </div>
+  </div>
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery-migrate-3.0.0.js"></script>
